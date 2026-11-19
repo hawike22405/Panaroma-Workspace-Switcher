@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Launch/control only Panorama; never kill or reload the Ryoku shell.
+set -euo pipefail
+DIR="$(cd -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")" && pwd -P)"
+if [[ $# -eq 0 || ${1:-} == help || ${1:-} == --help ]]; then
+    echo 'usage: ryoku-panorama {start|stop|restart|status|go WORKSPACE|log|doctor|enable-gestures|disable-gestures}'
+    exit 0
+fi
+exec python3 "$DIR/capture.py" "$@"

@@ -1,0 +1,19 @@
+[Unit]
+Description=Panaroma Workspace Switcher daemon
+ConditionUser=!@system
+PartOf=hyprland-session.target ryoku-session.target
+After=hyprland-session.target ryoku-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+ExecStart=%h/.local/bin/ryoku-panorama serve
+Restart=always
+RestartSec=2
+KillMode=process
+Slice=session.slice
+TimeoutStopSec=5
+
+[Install]
+WantedBy=hyprland-session.target ryoku-session.target default.target
