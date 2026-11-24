@@ -6,6 +6,10 @@ It is **not** a standard Firefox WebExtension: Firefox/Zen does not let extensio
 
 **Status:** self-contained implementation and interactive browser demo. Syntax and installer tests pass. The privileged script was **not runtime-tested inside Zen** in our build environment. Treat this as a **testable beta**, not a guaranteed one-click mod.
 
+## Recommended installation with Zen Nebula / Sine
+
+**Sine users:** Install Orbit directly through Sine using the `theme.json` manifest in this folder; do not reinstall fx-autoconfig over Sine. See [SINE_NEBULA_FIX.md](SINE_NEBULA_FIX.md) for the GitHub branch-folder URL, unofficial JavaScript setting, duplicate-file cleanup, and rollback. The existing fx-autoconfig instructions below apply to profiles **not** managed by Sine.
+
 ## What's included
 
 ```text
