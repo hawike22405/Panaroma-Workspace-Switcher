@@ -1,0 +1,31 @@
+{
+  "id": "zen-orbit-wheel",
+  "homepage": "https://github.com/hawike22405/Panaroma-Workspace-Switcher/tree/zen-orbit-wheel/zen-orbit-wheel",
+  "author": "hawike22405",
+  "name": "Zen Orbit Wheel",
+  "description": "Rotating golden fantasy-style tab switcher for Zen Browser; compatible with Sine and Nebula",
+  "version": "0.2.0",
+  "createdAt": "2026-11-24",
+  "updatedAt": "2026-11-24",
+  "style": {
+    "chrome": "chrome/CSS/OrbitWheel.uc.css"
+  },
+  "scripts": {
+    "chrome/JS/OrbitWheel.uc.js": {
+      "name": "Orbit Wheel browser controller",
+      "description": "Runs the golden tab wheel and Ctrl+Alt+O keyboard shortcut inside Zen browser chrome",
+      "include": [
+        "chrome://browser/content/browser.xhtml"
+      ]
+    }
+  },
+  "tags": [
+    "chrome",
+    "tabs",
+    "switcher",
+    "animation"
+  ],
+  "fork": [
+    "zen"
+  ]
+}
