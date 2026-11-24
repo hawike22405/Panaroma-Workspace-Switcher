@@ -5,7 +5,7 @@
 // ==/UserScript==
 /*
  * Orbit Wheel - browser-chrome script (not a WebExtension).
- * Requires a trusted userChromeJS loader, e.g. MrOtherGuy/fx-autoconfig.
+ * Requires a trusted browser-chrome JS loader (Sine or fx-autoconfig).
  * Does not change Zen installation binaries or persist page screenshots.
  * Source inspiration: https://github.com/FlafyDev/fantasy_rice
  * Copyright (c) 2026 Orbit Wheel contributors. MIT license applies to this original port.
@@ -448,8 +448,21 @@
     catch (error) { console.error('[OrbitWheel] failed to initialize:', error); }
   };
 
-  // fx-autoconfig runs at DOMContentLoaded; tabbrowser can be initialized later.
-  if (window.gBrowser?.tabContainer) initialize();
-  else if (window.UC_API?.Windows?.waitWindowLoading) window.UC_API.Windows.waitWindowLoading(window).then(initialize).catch(console.error);
-  else window.addEventListener('load', initialize, { once: true });
+  // Sine can inject scripts after DOMContentLoaded and even after window.load.
+  // The original one-time load listener would then never run. Retry briefly
+  // until Zen has initialized gBrowser.tabContainer, without blocking startup.
+  let startupAttempts = 0;
+  const tryInitialize = () => {
+    if (window[KEY]) return;
+    if (window.gBrowser?.tabContainer) {
+      initialize();
+      return;
+    }
+    if (++startupAttempts < 120) {
+      window.setTimeout(tryInitialize, 100);
+    } else {
+      console.warn('[OrbitWheel] initialization timed out: no gBrowser.tabContainer. Check Sine script settings and browser.xhtml include.');
+    }
+  };
+  tryInitialize();
 })();
