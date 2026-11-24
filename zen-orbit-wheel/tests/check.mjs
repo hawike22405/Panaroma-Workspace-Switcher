@@ -14,6 +14,22 @@ test('Required files are distributed', () => {
   }
 });
 
+test('Sine mod metadata resolves JavaScript and CSS paths', () => {
+  const manifest = JSON.parse(get('theme.json'));
+  assert.equal(manifest.id, 'zen-orbit-wheel');
+  assert(existsSync(join(root, manifest.style.chrome)));
+  const scripts = Object.keys(manifest.scripts);
+  assert.equal(scripts.length, 1);
+  assert(existsSync(join(root, scripts[0])));
+  assert.deepEqual(manifest.scripts[scripts[0]].include, ['chrome://browser/content/browser.xhtml']);
+});
+
+test('Late-injected Sine script initializes after window load', () => {
+  const code = get('chrome/JS/OrbitWheel.uc.js');
+  assert(code.includes('startupAttempts < 120'));
+  assert(code.includes('window.setTimeout(tryInitialize, 100)'));
+});
+
 test('All JavaScript files parse', () => {
   for (const file of ['chrome/JS/OrbitWheel.uc.js', 'demo/fake-browser.js', 'demo/demo.js']) {
     const run = spawnSync(process.execPath, ['--check', join(root, file)], { encoding: 'utf8' });
